@@ -20,12 +20,17 @@ Uygulama tarayıcıyı kendisi indirmez; sistemde kurulu olanı bulur. Tarayıc�
 
 ### Hazır paketle (son kullanıcı)
 
-1. GitHub'daki **Releases** sayfasından son sürümün dosyasını indirip çalıştırın: Mac'te `WhatsApp-Gonderici-<sürüm>-arm64.dmg`, Windows'ta `WhatsApp-Gonderici-<sürüm>-kurulum.exe`.
+1. Son sürümü indirip çalıştırın:
+   - **Windows (kurulum):** [WhatsApp-Gonderici-kurulum.exe](https://github.com/megavolkan/whatsapp-gonderici/releases/latest/download/WhatsApp-Gonderici-kurulum.exe)
+   - **Windows (portable, kurulumsuz):** [WhatsApp-Gonderici-portable.exe](https://github.com/megavolkan/whatsapp-gonderici/releases/latest/download/WhatsApp-Gonderici-portable.exe)
+   - **macOS (Apple Silicon):** [WhatsApp-Gonderici-arm64.dmg](https://github.com/megavolkan/whatsapp-gonderici/releases/latest/download/WhatsApp-Gonderici-arm64.dmg)
+
+   Bu bağlantılar her zaman en son sürümü indirir. Sürüm notları ve önceki sürümler: [Releases](https://github.com/megavolkan/whatsapp-gonderici/releases).
 2. İmzasız uygulama uyarısı alırsanız: Mac'te uygulamaya sağ tıklayıp **Aç** deyin, Windows'ta SmartScreen uyarısında **Ek bilgi → Yine de çalıştır** seçin.
 
 ### Portable (kurulumsuz, yalnızca Windows)
 
-`WhatsApp-Gonderici-<sürüm>-portable.exe` dosyası kurulum gerektirmez; USB bellekten dahi doğrudan çalıştırılabilir.
+`WhatsApp-Gonderici-portable.exe` dosyası kurulum gerektirmez; USB bellekten dahi doğrudan çalıştırılabilir.
 
 - Oturum verileri ve eşleştirmeler AppData'ya değil, exe'nin yanındaki `WhatsAppGondericiVerileri` klasörüne yazılır. Böylece exe'yi klasörüyle birlikte başka bir bilgisayara taşıdığınızda **QR'ı yeniden okutmanız gerekmez**.
 - ⚠️ Bu klasör WhatsApp oturum kimliğinizi içerir — exe'yi taşıdığınız ortamı (özellikle USB belleği) güvenli tutun; hesabı bırakırken klasörü silin.
@@ -51,7 +56,7 @@ Not: Windows paketini Mac üzerinde de üretebilirsiniz; electron-builder bunu d
 
 ### Sürüm yayınlama (otomatik)
 
-`.github/workflows/release.yml`: `package.json`'daki `version` için henüz etiket yoksa, `master`'a yapılan gönderimde macOS ve Windows paketleri GitHub Actions'ta derlenir, `v<sürüm>` etiketi oluşturulur ve `.dmg`, kurulum `.exe` ve portable `.exe` bir GitHub sürümü (Release) olarak yayınlanır. Yeni sürüm için `version` alanını artırıp (ör. `npm version patch --no-git-tag-version`) gönderim yapmak yeterlidir; sürüm değişmeyen gönderimlerde derleme yapılmaz. Actions sekmesinden elle çalıştırma (Run workflow) yayınlamadan deneme derlemesi yapar.
+`.github/workflows/release.yml`: `package.json`'daki `version` için henüz etiket yoksa, `master`'a yapılan gönderimde macOS ve Windows paketleri GitHub Actions'ta derlenir, `v<sürüm>` etiketi oluşturulur ve `.dmg`, kurulum `.exe` ve portable `.exe` bir GitHub sürümü (Release) olarak yayınlanır. Dosya adlarında sürüm numarası bilinçli olarak yoktur; böylece `releases/latest/download/<dosya>` bağlantıları her sürümde çalışır. Yeni sürüm için `version` alanını artırıp (ör. `npm version patch --no-git-tag-version`) gönderim yapmak yeterlidir; sürüm değişmeyen gönderimlerde derleme yapılmaz. Actions sekmesinden elle çalıştırma (Run workflow) yayınlamadan deneme derlemesi yapar.
 
 ## Kullanım
 

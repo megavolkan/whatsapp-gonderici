@@ -35,7 +35,7 @@
       }
     },
     "dmg": {
-      "artifactName": "WhatsApp-Gonderici-${version}-${arch}.dmg",
+      "artifactName": "WhatsApp-Gonderici-${arch}.dmg",
       "background": "build/dmg-arkaplan.png",
       "window": {
         "width": 540,
@@ -77,10 +77,10 @@
       ]
     },
     "portable": {
-      "artifactName": "WhatsApp-Gonderici-${version}-portable.exe"
+      "artifactName": "WhatsApp-Gonderici-portable.exe"
     },
     "nsis": {
-      "artifactName": "WhatsApp-Gonderici-${version}-kurulum.exe",
+      "artifactName": "WhatsApp-Gonderici-kurulum.exe",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     }

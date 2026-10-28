@@ -48,7 +48,7 @@ jobs:
       matrix:
         include:
           - name: macOS (Apple Silicon)
-            os: macos-14
+            os: macos-latest
             script: dist:mac
             files: |
               dist/*.dmg
