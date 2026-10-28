@@ -1,0 +1,22 @@
+WhatsApp Gönderici - Kurulum Notu
+=================================
+
+1) Yandaki uygulama simgesini Applications klasörüne sürükleyin.
+
+2) Uygulama Apple'a kayıtlı bir geliştirici imzası taşımadığı için
+   macOS ilk açılışta güvenlik uyarısı gösterir. Bunu aşmak için
+   iki yol vardır:
+
+   KOLAY YOL: Uygulamayı açmayı bir kez deneyin, ardından
+   Sistem Ayarları > Gizlilik ve Güvenlik bölümüne inin ve
+   "Yine de Aç" düğmesine basın.
+
+   HIZLI YOL: Terminal uygulamasını açın (Spotlight'ta "Terminal"
+   yazın), aşağıdaki satırı yapıştırıp Enter'a basın:
+
+   xattr -rd com.apple.quarantine "/Applications/WhatsApp Gonderici.app"
+
+Bu işlem yalnızca ilk kurulumda bir kez gerekir.
+
+Not: Uygulamanın çalışması için bilgisayarınızda Google Chrome,
+Microsoft Edge veya Brave tarayıcılarından biri kurulu olmalıdır.

@@ -1,0 +1,5 @@
+[
+    { "resim": "gorsel_1.jpg", "ad": "Ahmet Yılmaz", "numara": "+905321234567" },
+    { "resim": "gorsel_2.jpg", "ad": "Ayşe Demir", "numara": "+905337654321" },
+    { "resim": "resimler/mehmet.jpg", "ad": "Mehmet Kaya", "numara": "0544 111 22 33" }
+]

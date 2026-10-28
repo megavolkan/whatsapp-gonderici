@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>WhatsApp Gönderici</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>WhatsApp Gönderici</h1>
+        <p class="uyari">⚠️ Normal hesaptan toplu gönderim numaranızın banlanmasına yol açabilir. Gecikmeleri düşürmeyin, günde birkaç yüz mesajı aşmayın.</p>
+    </header>
+
+    <main>
+        <section class="kart" id="senaryo-karti">
+            <h2>1. Ne yapmak istiyorsunuz?</h2>
+            <label class="senaryo-secim">
+                <input type="radio" name="senaryo" value="mesaj">
+                <span><strong>Sadece yazılı mesaj</strong> göndermek istiyorum. <span class="soluk">(Kişiselleştirilebilir)</span></span>
+            </label>
+            <label class="senaryo-secim">
+                <input type="radio" name="senaryo" value="ayni-dosya">
+                <span>Herkese <strong>AYNI DOSYAYI</strong> göndermek istiyorum. <span class="soluk">(Mesajlı / mesajsız)</span></span>
+            </label>
+            <label class="senaryo-secim">
+                <input type="radio" name="senaryo" value="kisisel-dosya" checked>
+                <span>Herkese <strong>KİŞİSELLEŞTİRİLMİŞ AYRI DOSYALAR</strong> göndermek istiyorum. <span class="soluk">(Mesajlı / mesajsız)</span></span>
+            </label>
+        </section>
+
+        <section class="kart" id="baglanti-karti">
+            <h2>2. WhatsApp Bağlantısı</h2>
+            <div class="satir">
+                <label for="oturum-adi">Hesap (oturum) adı</label>
+                <input type="text" id="oturum-adi" value="varsayilan" placeholder="orn. kampanya1">
+                <button id="btn-baglan">Bağlan</button>
+                <button id="btn-cikis" class="ikincil" disabled>Oturumu Kapat</button>
+            </div>
+            <div class="satir">
+                <span class="rozet" id="durum-rozet" data-durum="kapali">Bağlı değil</span>
+                <span id="bagli-numara"></span>
+            </div>
+            <div id="qr-alan" class="gizli">
+                <p>Telefonunuzda WhatsApp → Ayarlar → Bağlı Cihazlar → Cihaz Bağla yolunu izleyip bu kodu okutun:</p>
+                <img id="qr-resim" alt="QR kod">
+            </div>
+        </section>
+
+        <section class="kart">
+            <h2>3. Gönderim Listesi
+                <button type="button" id="btn-liste-bilgi" class="bilgi-ikon" aria-label="Liste biçimi hakkında bilgi" title="Liste biçimi nasıl olmalı?">i</button>
+            </h2>
+            <div class="satir">
+                <button id="btn-json-sec">Liste Dosyası Seç (JSON / Excel)</button>
+                <span id="json-yolu" class="soluk">Henüz dosya seçilmedi</span>
+            </div>
+            <div class="ayni-dosya-alan gizli" id="ayni-dosya-alan">
+                <div class="satir">
+                    <button id="btn-dosya-sec" class="ikincil">Gönderilecek Dosyayı Seç</button>
+                    <span id="dosya-adi" class="soluk">Henüz dosya seçilmedi</span>
+                </div>
+                <p class="soluk kucuk">Bu dosya listedeki herkese gönderilir. Resimler fotoğraf, diğer türler (PDF, Word vb.) belge olarak gider.</p>
+            </div>
+            <div id="esleme-alan" class="esleme-alan gizli">
+                <span class="esleme-baslik">Sütun eşleştirme:</span>
+                <label class="esleme-secim">Telefon
+                    <select id="esleme-numara"></select>
+                </label>
+                <label class="esleme-secim">İsim
+                    <select id="esleme-ad"></select>
+                </label>
+                <label class="esleme-secim" id="esleme-dosya-kap">Dosya
+                    <select id="esleme-dosya"></select>
+                </label>
+                <span class="soluk kucuk">Sütunlar yanlış eşleştiyse buradan düzeltin; liste yeniden doğrulanır.</span>
+            </div>
+            <div id="liste-ozet" class="gizli">
+                <span class="rozet yesil" id="ozet-hazir"></span>
+                <span class="rozet gri" id="ozet-onceden"></span>
+                <span class="rozet kirmizi" id="ozet-hata"></span>
+            </div>
+            <ul id="hata-listesi" class="hatalar gizli"></ul>
+            <div class="tablo-kap gizli" id="tablo-kap">
+                <table id="liste-tablo">
+                    <thead>
+                        <tr><th>#</th><th>Üye</th><th>Numara</th><th id="th-dosya">Dosya</th><th>Durum</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="kart">
+            <h2>4. Gönderim</h2>
+            <label for="mesaj-metni">Mesaj metni</label>
+            <div id="degisken-palet" class="degisken-palet gizli">
+                <span class="palet-etiket">Ekle:</span>
+            </div>
+            <div id="mesaj-metni" class="mesaj-editor" contenteditable="true" data-bos="Mesaj yazın ya da yalnızca dosya göndermek için boş bırakın…"></div>
+            <p class="soluk kucuk" id="degisken-ipucu">Bu metin her alıcıya dosyanın açıklaması olarak eklenir; tamamen silerseniz yalnızca dosya gönderilir. Yukarıdaki değişken etiketlerine tıklayarak listedeki bilgileri mesaja ekleyebilirsiniz (örn. <code>Sayın {name},</code>).</p>
+            <p class="kucuk mesaj-uyari gizli" id="mesaj-zorunlu-not">⚠️ Yüzlerce kişiye birebir aynı metni göndermek spam olarak algılanıp banlanma riskini artırır. Mesajı <code>{name}</code> gibi değişkenlerle kişiselleştirmeniz bu riski azaltır.</p>
+            <p class="soluk kucuk gizli" id="mesaj-onizleme"></p>
+            <p class="kucuk mesaj-uyari gizli" id="mesaj-uyarilar"></p>
+            <div class="satir">
+                <label>Gecikme aralığı (saniye)</label>
+                <input type="number" id="min-gecikme" value="20" min="3" style="width:70px"> –
+                <input type="number" id="max-gecikme" value="45" min="3" style="width:70px">
+                <button id="btn-gonder" disabled>Gönderimi Başlat</button>
+                <button id="btn-iptal" class="ikincil" disabled>Durdur</button>
+            </div>
+            <div class="ilerleme-kap gizli" id="ilerleme-kap">
+                <div class="ilerleme-cubuk"><div id="ilerleme-dolgu"></div></div>
+                <span id="ilerleme-metin"></span>
+            </div>
+            <div id="kayit" class="kayit"></div>
+        </section>
+    </main>
+
+    <div class="modal-perde gizli" id="liste-bilgi-modal">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="liste-bilgi-baslik">
+            <div class="modal-baslik">
+                <h3 id="liste-bilgi-baslik">Liste dosyası nasıl olmalı?</h3>
+                <button type="button" class="modal-kapat" id="btn-liste-bilgi-kapat" aria-label="Kapat">&times;</button>
+            </div>
+            <div class="modal-govde">
+                <p>Alıcı listesini <strong>Excel (.xlsx)</strong> ya da <strong>JSON (.json)</strong> olarak verebilirsiniz. Her iki biçimde de gereken tek zorunlu bilgi <strong>telefon numarası</strong>dır.</p>
+
+                <h4>Excel (.xlsx) — önerilen</h4>
+                <p>İlk satır sütun başlıkları olsun, sonraki her satır bir alıcı:</p>
+                <table class="ornek-tablo">
+                    <thead><tr><th>isim</th><th>tel</th></tr></thead>
+                    <tbody>
+                        <tr><td>Ahmet Yılmaz</td><td>+90 532 123 45 67</td></tr>
+                        <tr><td>Ayşe Demir</td><td>0533 765 43 21</td></tr>
+                    </tbody>
+                </table>
+                <p class="soluk kucuk">Numbers veya LibreOffice'in en üste eklediği "Tablo 1" gibi başlık satırları otomatik atlanır. Başlıklar büyük/küçük harfe duyarsızdır.</p>
+
+                <h4>JSON (.json)</h4>
+                <p>Nesnelerden oluşan bir dizi:</p>
+                <pre class="kod-blok">[
+  { "tel": "+905321234567", "isim": "Ad Soyad", "id": "gorsel_1.jpg" },
+  { "numara": "0532...", "resim": "ahmet.jpg" }
+]</pre>
+
+                <h4>Sütun adları</h4>
+                <ul>
+                    <li><strong>Telefon</strong> (zorunlu): <code>tel</code>, <code>telefon</code>, <code>numara</code>, <code>gsm</code> ya da <code>cep</code></li>
+                    <li><strong>İsim</strong> (isteğe bağlı): <code>isim</code>, <code>ad</code> ya da <code>name</code></li>
+                    <li><strong>Dosya</strong> (yalnızca "kişiselleştirilmiş ayrı dosyalar" senaryosunda): <code>resim</code>, <code>dosya</code>, <code>id</code> ya da <code>img</code></li>
+                </ul>
+                <p class="soluk kucuk">Sütunlarınız farklı adlandırılmışsa ya da otomatik eşleştirme yanlış sütunu seçtiyse sorun değil: liste yüklendikten sonra <strong>Sütun eşleştirme</strong> bölümünden hangi sütunun telefon, isim ve dosya olduğunu elle seçebilirsiniz.</p>
+
+                <h4>Dosya yolları</h4>
+                <p>Dosya sütunundaki yollar, liste dosyasının bulunduğu klasöre göre çözülür. Resimler fotoğraf; PDF, Word, ZIP gibi türler belge olarak gönderilir.</p>
+                <p class="soluk kucuk">İpucu: Listedeki herhangi bir sütunu mesaj metninde <code>{sütunAdı}</code> yazarak kullanabilirsiniz (örn. <code>Sayın {isim},</code>).</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

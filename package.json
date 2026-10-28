@@ -1,0 +1,98 @@
+{
+  "name": "whatsapp-gonderici",
+  "productName": "WhatsApp Gonderici",
+  "version": "0.2.0",
+  "description": "JSON listesinden kişiye özel resimleri WhatsApp üzerinden gönderen masaüstü uygulaması",
+  "main": "main.js",
+  "author": "megavolkan",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "patch-package",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.megavolkan.whatsapp-gonderici",
+    "productName": "WhatsApp Gonderici",
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**",
+      "renderer/**",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities",
+      "sign": "scripts/sign.js",
+      "icon": "build/icon-mac.png",
+      "extendInfo": {
+        "CFBundleDisplayName": "WhatsApp Gönderici"
+      }
+    },
+    "dmg": {
+      "artifactName": "WhatsApp-Gonderici-${version}-${arch}.dmg",
+      "background": "build/dmg-arkaplan.png",
+      "window": {
+        "width": 540,
+        "height": 380
+      },
+      "contents": [
+        {
+          "x": 140,
+          "y": 140
+        },
+        {
+          "x": 400,
+          "y": 140,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 220,
+          "y": 270,
+          "type": "file",
+          "path": "build/Benioku.txt"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "WhatsApp-Gonderici-${version}-portable.exe"
+    },
+    "nsis": {
+      "artifactName": "WhatsApp-Gonderici-${version}-kurulum.exe",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "qrcode": "^1.5.4",
+    "whatsapp-web.js": "^1.26.0"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3",
+    "patch-package": "^8.0.1"
+  }
+}

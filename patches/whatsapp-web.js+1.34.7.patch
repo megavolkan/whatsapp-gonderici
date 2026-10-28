@@ -1,0 +1,15 @@
+diff --git a/node_modules/whatsapp-web.js/src/util/Injected/Utils.js b/node_modules/whatsapp-web.js/src/util/Injected/Utils.js
+index 540078a..e41b9d1 100644
+--- a/node_modules/whatsapp-web.js/src/util/Injected/Utils.js
++++ b/node_modules/whatsapp-web.js/src/util/Injected/Utils.js
+@@ -483,6 +483,10 @@ exports.LoadUtils = () => {
+             ...extraOptions,
+         };
+ 
++        // WhatsApp Web (Eylül 2026) MediaData modeline id ekledi; yayılan
++        // mediaOptions'ın __x_id'si mesaj anahtarını ezmesin (wwebjs PR #201923).
++        delete message.__x_id;
++
+         // Bot's won't reply if canonicalUrl is set (linking)
+         if (botOptions) {
+             delete message.canonicalUrl;
